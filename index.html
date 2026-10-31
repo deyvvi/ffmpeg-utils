@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" data-theme="dark" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1b1b1b" />
+    <title>FFmpeg Utils</title>
+    <style>
+      html {
+        background: #1b1b1b;
+      }
+      html[data-theme="light"] {
+        background: #f4f4f4;
+      }
+    </style>
+    <script>
+      (() => {
+        const boot = window.__FFMPEG_BOOT__ || {
+          theme: "dark",
+          density: "comfortable",
+        };
+        const media = window.matchMedia?.("(prefers-color-scheme: light)");
+        const light = media?.matches ?? false;
+        const theme =
+          boot.theme === "light"
+            ? "light"
+            : boot.theme === "system"
+              ? light
+                ? "light"
+                : "dark"
+              : "dark";
+        const root = document.documentElement;
+        root.dataset.theme = theme;
+        root.classList.toggle("dark", theme === "dark");
+        root.dataset.density = boot.density === "compact" ? "compact" : "comfortable";
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
